@@ -50,6 +50,8 @@ int main()
 
 void InputCoeff( coeffs* c)
 {
+
+
     printf("Input coeff A: \n");
     if(!scanf("%lg", &c->a))
         exit(EXIT_FAILURE);

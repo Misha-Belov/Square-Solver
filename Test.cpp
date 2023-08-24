@@ -48,7 +48,7 @@ void TestAll()
 
 int TestOne(const test* ref)
 {
-    double x1 = 0, x2 = 0;
+    double x1 = NAN, x2 = 0;
 
     struct coeffs c = {ref->ec.a, ref->ec.b, ref->ec.c} ;
 

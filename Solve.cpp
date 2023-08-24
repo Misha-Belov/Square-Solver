@@ -1,10 +1,11 @@
 #include "Solve.h"
-
+            // ctype.h isfinite isnan
 
 const double EPS = 1e-9;
 
 int CompareDouble (double a, double b)
     {
+    assert()
     if (fabs (a - b) < EPS)
         return 1;
     else
