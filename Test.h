@@ -22,6 +22,6 @@ struct test
 
 int FileReader(test* ref);
 void TestAll();
-int TestOne(const test* ref);
+bool TestOne(const test* ref);
 
 #endif

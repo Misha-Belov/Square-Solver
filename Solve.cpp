@@ -3,9 +3,14 @@
 
 const double EPS = 1e-9;
 
-int CompareDouble (double a, double b)
+bool CompareDouble (double a, double b)
     {
-    //assert(isfinite(a));
+    assert(isfinite(a));
+    assert(isfinite(b));
+    assert(!isnan(a));
+    assert(!isnan(b));
+
+
     if (fabs (a - b) < EPS)
         return 1;
     else

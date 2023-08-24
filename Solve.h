@@ -19,6 +19,6 @@ void PrintRoot( double x1, double x2, int num );
 
 roots SolveSquare1( coeffs* c, double *x1, double *x2 );
 roots SolveLinear(coeffs* c, double *x1);
-int CompareDouble(double a, double b);
+bool CompareDouble(double a, double b);
 
  #endif

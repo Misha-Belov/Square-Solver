@@ -46,7 +46,7 @@ void TestAll()
     printf ("TestOk: %d out of %d\n", nOk, TEST_NUM);
 }
 
-int TestOne(const test* ref)
+bool TestOne(const test* ref)
 {
     double x1 = 0, x2 = 0;
 

@@ -80,6 +80,12 @@ void InputCoeff( coeffs* c)
 
 void PrintRoot( double x1, double x2, int num )
 {
+    assert(isfinite(x1));
+    assert(isfinite(x2));
+    assert(!isnan(x1));
+    assert(!isnan(x2));
+
+
     switch(num)
     {
     case NO_ROOT:
