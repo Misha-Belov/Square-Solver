@@ -5,7 +5,7 @@ const double EPS = 1e-9;
 
 int CompareDouble (double a, double b)
     {
-    assert()
+    //assert(isfinite(a));
     if (fabs (a - b) < EPS)
         return 1;
     else

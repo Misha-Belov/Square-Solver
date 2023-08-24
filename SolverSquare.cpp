@@ -46,23 +46,34 @@ int main()
     PrintRoots(roots, nroots);                 */
 }
 
+void FlashBufer()
+{
+    while( getchar() != '\n')
+    {
+    }
+}
 
+void ScanCoeff( double* coeff )
+{
+    while(!scanf("%lg", coeff))
+    {
+        printf("WRONG INPUT, TRY AGAIN:\n");
+        FlashBufer();
+    }
+}
 
 void InputCoeff( coeffs* c)
 {
 
 
     printf("Input coeff A: \n");
-    if(!scanf("%lg", &c->a))
-        exit(EXIT_FAILURE);
+    ScanCoeff(&c->a);
 
     printf("Input coeff B: \n");
-    if(!scanf("%lg", &c->b))
-        exit(EXIT_FAILURE);
+    ScanCoeff(&c->b);
 
     printf("Input coeff C: \n");
-    if(!scanf("%lg", &c->c))
-        exit(EXIT_FAILURE);
+    ScanCoeff(&c->c);
 }
 
 

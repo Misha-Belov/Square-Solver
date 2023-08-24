@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <assert.h>
+#include <ctype.h>
 
 
 
@@ -10,6 +12,8 @@ enum roots {NO_ROOT = 0, ONE_ROOT = 1, TWO_ROOT = 2, INF_ROOT = 8};
 
 struct coeffs {double a, b, c;};
 
+void FlashBufer();
+void ScanCoeff( double* coeff);
 void InputCoeff( coeffs* c);
 void PrintRoot( double x1, double x2, int num );
 
