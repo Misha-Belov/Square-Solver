@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Test.h"
 #include "Solve.h"
 
@@ -10,26 +11,67 @@ int SolveSquare( double coeffs, int Ncoeffs, double roots, int Nroots );
 int PrintRoots( double roots, int Nroots );  */
 
 
+void ReedCommandString(int charnum, char* command[], coeffs* coef)
+{
+    int i = 0;
+    char file[10] = "--file";
+
+    for(; i < charnum; i++)
+    {
+        if(strcmp(command[i], file))
+        {
+            ReedFromFile(command[i + 2], coef);
+        }
+    }
+
+}
+
+void ReedFromFile(char* filename, coeffs* coef)
+{
+    int num;
+    double x1 = 0, x2 = 0;
+
+    FILE *F;
+
+    if( (F = fopen(filename, "r")) != NULL )
+    {
+        while (fscanf(F, "%lg %lg %lg ", &coef->a, &coef->b, &coef->c) != EOF)
+        {
+            printf("%lg %lg %lg\n", coef->a, coef->b, coef->c);
+            num = SolveSquare1(coef, &x1, &x2);
+            PrintRoot( x1, x2, num );
+        }
+        fclose(F);
+    }
+    else
+        printf("file didn't open\n");
+
+}
 
 
-
-int main()
+int main(int argc, char* argv[])
 {
     /*const int ncoeffs = 3;
     const int nroots = 2;  */
 
-    double x1 = 0, x2 = 0;
-    int num = 0;
+    //int argc;
+    //char *argv[15];
+
+
+    //double x1 = 0, x2 = 0;
+    //int num = 0;
 
     struct coeffs c = {.a = 0, .b = 0, .c = 0} ;
 
-    InputCoeff(&c);
+    ReedCommandString(argc, argv, &c);
+
+    //InputCoeff(&c);
 
     printf("%lg %lg %lg \n", c.a, c.b, c.c);
 
-    num = SolveSquare1(&c, &x1, &x2);
+    //num = SolveSquare1(&c, &x1, &x2);
 
-    PrintRoot( x1, x2, num );
+    //PrintRoot( x1, x2, num );
 
 
     TestAll();

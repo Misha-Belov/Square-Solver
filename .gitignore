@@ -5,3 +5,12 @@ github/SolveSquare.c.g++log.txt
 *.save
 SolveSquare.c.g++log.txt
 *.cbTemp
+*.tex
+*.png
+*.css
+*.svg
+*.js
+*.html
+*.sty
+*.bat
+latex/Makefile
