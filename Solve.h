@@ -5,6 +5,7 @@
 #include <math.h>
 #include <assert.h>
 #include <ctype.h>
+#include <string.h>
 
 /**
     \file File with prototypes of function that solves quantities

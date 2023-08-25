@@ -58,3 +58,43 @@ roots SolveLinear (coeffs* c, double* x1)
         return ONE_ROOT;
         }
     }
+
+
+
+void ReedCommandString(int charnum, char* command[], coeffs* coef)
+{
+    int i = 0;
+    char file[10] = "--file";
+
+    for(; i < charnum; i++)
+    {
+        //printf("%s\n", command[i]);
+        if(!strcmp(command[i], file))
+        {
+            ReedFromFile(command[i + 1], coef);
+        }
+    }
+
+}
+
+void ReedFromFile(char* filename, coeffs* coef)
+{
+    int num;
+    double x1 = 0, x2 = 0;
+
+    FILE *F;
+
+    if( (F = fopen(filename, "r")) != NULL )
+    {
+        while (fscanf(F, "%lg %lg %lg ", &coef->a, &coef->b, &coef->c) != EOF)
+        {
+            printf("%lg %lg %lg\n", coef->a, coef->b, coef->c);
+            num = SolveSquare1(coef, &x1, &x2);
+            PrintRoot( x1, x2, num );
+        }
+        fclose(F);
+    }
+    else
+        printf("file didn't open\n");
+
+}

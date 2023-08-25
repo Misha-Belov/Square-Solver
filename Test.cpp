@@ -2,6 +2,9 @@
 #include "Test.h"
 
 
+#include "ANSI-color-codes.h"
+
+
 int FileReader(test* ref)
 {
     int nOk = 0;
@@ -12,7 +15,7 @@ int FileReader(test* ref)
     {
         while (fscanf(F, "%lg %lg %lg %lg %lg %d %s", &ref->ec.a, &ref->ec.b, &ref->ec.c, &ref->x1, &ref->x2, &ref->nRoots, ref->name) != EOF)
         {
-            printf("%lg %lg %lg %lg %lg %d %s\n", ref->ec.a, ref->ec.b, ref->ec.c, ref->x1, ref->x2, ref->nRoots, ref->name);
+            printf(GRN "%lg %lg %lg %lg %lg %d %s\n" reset, ref->ec.a, ref->ec.b, ref->ec.c, ref->x1, ref->x2, ref->nRoots, ref->name);
             nOk += TestOne(ref);
         }
         fclose(F);
@@ -58,7 +61,7 @@ bool TestOne(const test* ref)
 
     if( !CompareDouble(x1, ref->x1)|| !CompareDouble(x2, ref->x2) || !CompareDouble(numroots, ref->nRoots) )
     {
-        printf("ERROR in %s x1 = %lg, x2 = %lg, numroots = %d \nINSTEAD OF: x1 = %lg, x2 = %lg, numroots = %d \n", ref->name, x1, x2, numroots, ref->x1, ref->x2, ref->nRoots);
+        printf( BRED "ERROR in %s x1 = %lg, x2 = %lg, numroots = %d \nINSTEAD OF: x1 = %lg, x2 = %lg, numroots = %d \n" reset, ref->name, x1, x2, numroots, ref->x1, ref->x2, ref->nRoots);
         return 0;
     }
     else
