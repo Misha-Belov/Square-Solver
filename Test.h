@@ -12,14 +12,14 @@ const int TEST_NUM = 5;     /*!< a number of tests */
 /*! \brief A structure for all information in tests */
 struct test
 {
-    struct coeffs ec;
-    double x1, x2;     ///< expected roots
-    int nRoots;
-    char name[NAME_SIZE];
+    struct coeffs expect_coef;
+    double root1, root2;     ///< expected roots
+    int number_roots;
+    char test_name[NAME_SIZE];
 };
 
-int FileReader(test* ref);      //!< \brief a function that put information from file to structure.
+int FileReader(test* expect);      //!< \brief a function that put information from file to structure.
 void TestAll();                 //!< \brief a function that started tests.
-bool TestOne(const test* ref);  //!< \brief a function that doing separate test \param [in] ref structure which include all information.
+bool TestOne(const test* expect);  //!< \brief a function that doing separate test \param [in] ref structure which include all information.
 
 #endif

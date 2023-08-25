@@ -5,30 +5,30 @@
 #include "ANSI-color-codes.h"
 
 
-int FileReader(test* ref)
+int FileReader(test* expect)
 {
-    int nOk = 0;
+    int number_Ok = 0;
 
     FILE *F;
 
     if( (F = fopen("test.txt", "r")) != NULL )
     {
-        while (fscanf(F, "%lg %lg %lg %lg %lg %d %s", &ref->ec.a, &ref->ec.b, &ref->ec.c, &ref->x1, &ref->x2, &ref->nRoots, ref->name) != EOF)
+        while (fscanf(F, "%lg %lg %lg %lg %lg %d %s", &expect->expect_coef.a, &expect->expect_coef.b, &expect->expect_coef.c, &expect->root1, &expect->root2, &expect->number_roots, expect->test_name) != EOF)
         {
-            printf(GRN "%lg %lg %lg %lg %lg %d %s\n" reset, ref->ec.a, ref->ec.b, ref->ec.c, ref->x1, ref->x2, ref->nRoots, ref->name);
-            nOk += TestOne(ref);
+            printf(GRN "%lg %lg %lg %lg %lg %d %s\n" reset, expect->expect_coef.a, expect->expect_coef.b, expect->expect_coef.c, expect->root1, expect->root2, expect->number_roots, expect->test_name);
+            number_Ok += TestOne(expect);
         }
         fclose(F);
     }
     else
         printf("file didn't open");
 
-    return nOk;
+    return number_Ok;
 }
 
 void TestAll()
 {
-    int nOk = 0;
+    int number_Ok = 0;
 
     /*test ref[TEST_NUM] = {{{1, 4, 4},-2, 0, 1, "ONE_ROOT"},
                         {{1, 0, -4}, 2, -2, 2, "TWO_ROOTS"},
@@ -39,29 +39,29 @@ void TestAll()
         nOk += TestOne(&ref[i]);
     */
 
-    test ref = {};
+    test expect = {};
 
-    nOk = FileReader(&ref);
-
-
+    number_Ok = FileReader(&expect);
 
 
-    printf ("TestOk: %d out of %d\n", nOk, TEST_NUM);
+
+
+    printf ("TestOk: %d out of %d\n", number_Ok, TEST_NUM);
 }
 
-bool TestOne(const test* ref)
+bool TestOne(const test* expect)
 {
-    double x1 = 0, x2 = 0;
+    double root1 = 0, root2 = 0;
 
-    struct coeffs c = {ref->ec.a, ref->ec.b, ref->ec.c} ;
+    struct coeffs coef = {expect->expect_coef.a, expect->expect_coef.b, expect->expect_coef.c} ;
 
 
 
-    int numroots = SolveSquare1(/*&ref->ec*/ &c, &x1, &x2);
+    int number_roots = SolveSquare(/*&ref->ec*/ &coef, &root1, &root2);
 
-    if( !CompareDouble(x1, ref->x1)|| !CompareDouble(x2, ref->x2) || !CompareDouble(numroots, ref->nRoots) )
+    if( !CompareDouble(root1, expect->root1)|| !CompareDouble(root2, expect->root2) || !CompareDouble(number_roots, expect->number_roots) )
     {
-        printf( BRED "ERROR in %s x1 = %lg, x2 = %lg, numroots = %d \nINSTEAD OF: x1 = %lg, x2 = %lg, numroots = %d \n" reset, ref->name, x1, x2, numroots, ref->x1, ref->x2, ref->nRoots);
+        printf( BRED "ERROR in %s x1 = %lg, x2 = %lg, numroots = %d \nINSTEAD OF: x1 = %lg, x2 = %lg, numroots = %d \n" reset, expect->test_name, root1, root2, number_roots, expect->root1, expect->root2, expect->number_roots);
         return 0;
     }
     else

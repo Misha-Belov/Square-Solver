@@ -5,7 +5,7 @@ const double EPS = 1e-9;
 
 bool CompareDouble (double a, double b)
     {
-    Assert(!isfinite(a));
+    Assert(isfinite(a));
     assert(isfinite(b));
     assert(!isnan(a));
     assert(!isnan(b));
@@ -17,56 +17,55 @@ bool CompareDouble (double a, double b)
         return 0;
     }
 
-roots SolveSquare1 (coeffs* c, double* x1, double* x2)
+roots SolveSquare(coeffs* coef, double* root1, double* root2)
     {
 
 
-    if (CompareDouble (c->a, 0))
+    if (CompareDouble (coef->a, 0))
         {
-        return SolveLinear (c, x1);
+        return SolveLinear (coef, root1);
 
         }
 
-    double D = c->b * c->b - 4 * c->a * c->c;
+    double D = coef->b * coef->b - 4 * coef->a * coef->c;
 
     if (D < 0)
         return NO_ROOT;
     else if (CompareDouble (D, 0))
         {
-        *x1 = - c->b / (2 * c->a);
+        *root1 = - coef->b / (2 * coef->a);
         return ONE_ROOT;
         }
     else
         {
-        *x1 = (-c->b + sqrt (D)) / (2 * c->a);
-        *x2 = (-c->b - sqrt (D)) / (2 * c->a);
+        *root1 = (-coef->b + sqrt (D)) / (2 * coef->a);
+        *root2 = (-coef->b - sqrt (D)) / (2 * coef->a);
         return TWO_ROOT;
         }
 
     }
 
-roots SolveLinear (coeffs* c, double* x1)
+roots SolveLinear (coeffs* coef, double* root1)
     {
-    if (CompareDouble (c->b, 0))
-        if (CompareDouble (c->c, 0))
+    if (CompareDouble (coef->b, 0))
+        if (CompareDouble (coef->c, 0))
             return INF_ROOT;
         else
             return NO_ROOT;
     else
         {
-        *x1 = - c->c / c->b;
+        *root1 = - coef->c / coef->b;
         return ONE_ROOT;
         }
     }
 
 
 
-void ReedCommandString(int charnum, char* command[], coeffs* coef)
+void ReedCommandString(int number_chars, char* command[], coeffs* coef)
 {
-    int i = 0;
     char file[10] = "--file";
 
-    for(; i < charnum; i++)
+    for(int i = 0; i < number_chars; i++)
     {
         //printf("%s\n", command[i]);
         if(!strcmp(command[i], file))
@@ -79,8 +78,8 @@ void ReedCommandString(int charnum, char* command[], coeffs* coef)
 
 void ReedFromFile(char* filename, coeffs* coef)
 {
-    int num;
-    double x1 = 0, x2 = 0;
+    int number_roots;
+    double root1 = 0, root2 = 0;
 
     FILE *F;
 
@@ -89,8 +88,8 @@ void ReedFromFile(char* filename, coeffs* coef)
         while (fscanf(F, "%lg %lg %lg ", &coef->a, &coef->b, &coef->c) != EOF)
         {
             printf("%lg %lg %lg\n", coef->a, coef->b, coef->c);
-            num = SolveSquare1(coef, &x1, &x2);
-            PrintRoot( x1, x2, num );
+            number_roots = SolveSquare(coef, &root1, &root2);
+            PrintRoot( root1, root2, number_roots);
         }
         fclose(F);
     }

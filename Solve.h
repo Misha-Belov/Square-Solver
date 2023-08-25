@@ -39,11 +39,11 @@ struct coeffs {double a, b, c;};
 
 */
 
-void ReedCommandString(int charnum, char* command[], coeffs* coef);
+void ReedCommandString(int number_chars, char* command[], coeffs* coef);
 void ReedFromFile(char* filename, coeffs* coef);
 void FlashBufer();                                          //!< a function that delete symbols from buffer.
-void ScanCoeff( double* coeff);                             //!< a function that put coefficients from keyboard to structure and control them.
-void InputCoeff( coeffs* c);                                //!< a function that asks user for coefficients.
+void ScanCoeff( double* coef);                             //!< a function that put coefficients from keyboard to structure and control them.
+void InputCoeff( coeffs* coef);                                //!< a function that asks user for coefficients.
 
 /*! \fn void PrintRoot( double x1, double x2, int num )
     \brief a function that print roots of user's equation.
@@ -53,11 +53,11 @@ void InputCoeff( coeffs* c);                                //!< a function that
     \param x2 second root \warning by default is zero
     \param num number of roots
 */
-void PrintRoot( double x1, double x2, int num );
+void PrintRoot( double root1, double root2, int number_roots );
 
 
-roots SolveSquare1( coeffs* c, double *x1, double *x2 );    //!< a function that solves equation in common situations.
-roots SolveLinear(coeffs* c, double *x1);                   //!< a function that solves equation when main coefficient is zero.
+roots SolveSquare( coeffs* coef, double *root1, double *root2 );    //!< a function that solves equation in common situations.
+roots SolveLinear(coeffs* coef, double *root1);                   //!< a function that solves equation when main coefficient is zero.
 bool CompareDouble(double a, double b);                     //!< a function that compares two numbers.
 
  #endif

@@ -14,6 +14,7 @@ int PrintRoots( double roots, int Nroots );  */
 
 int main(int argc, char* argv[])
 {
+    int option_of_decision = 0;
     /*const int ncoeffs = 3;
     const int nroots = 2;  */
 
@@ -21,23 +22,34 @@ int main(int argc, char* argv[])
     //char *argv[15];
 
 
-    //double x1 = 0, x2 = 0;
-    //int num = 0;
+    double root1 = 0, root2 = 0;
+    int number_roots = 0;
 
-    struct coeffs c = {.a = 0, .b = 0, .c = 0} ;
+    struct coeffs coef = {.a = 0, .b = 0, .c = 0} ;
 
-    ReedCommandString(argc, argv, &c);
+    ReedCommandString(argc, argv, &coef);
 
-    //InputCoeff(&c);
+    printf("Write 1 if you want to start testing or 2 if you want to input numbers:\n");
+    scanf("%d", &option_of_decision);
 
-    //printf("%lg %lg %lg \n", c.a, c.b, c.c);
+    switch(option_of_decision)
+    {
+        case 1:
+            TestAll();
+            break;
+        case 2:
+            InputCoeff(&coef);
+            number_roots = SolveSquare(&coef, &root1, &root2);
+            PrintRoot( root1, root2, number_roots );
+            break;
+        default:
+            break;
 
-    //num = SolveSquare1(&c, &x1, &x2);
-
-    //PrintRoot( x1, x2, num );
+    }
 
 
-    TestAll();
+
+
 
 
 /*   double coeffs[ncoeffs] = {};
@@ -58,49 +70,49 @@ void FlashBufer()
     }
 }
 
-void ScanCoeff( double* coeff )
+void ScanCoeff( double* coef )
 {
-    while(!scanf("%lg", coeff))
+    while(!scanf("%lg", coef))
     {
         printf("WRONG INPUT, TRY AGAIN:\n");
         FlashBufer();
     }
 }
 
-void InputCoeff( coeffs* c)
+void InputCoeff( coeffs* coef)
 {
 
 
     printf("Input coeff A: \n");
-    ScanCoeff(&c->a);
+    ScanCoeff(&coef->a);
 
     printf("Input coeff B: \n");
-    ScanCoeff(&c->b);
+    ScanCoeff(&coef->b);
 
     printf("Input coeff C: \n");
-    ScanCoeff(&c->c);
+    ScanCoeff(&coef->c);
 }
 
 
 
-void PrintRoot( double x1, double x2, int num )
+void PrintRoot( double root1, double root2, int number_roots )
 {
-    assert(isfinite(x1));
-    assert(isfinite(x2));
-    assert(!isnan(x1));
-    assert(!isnan(x2));
+    Assert(isfinite(root1));
+    Assert(isfinite(root2));
+    Assert(!isnan(root1));
+    Assert(!isnan(root2));
 
 
-    switch(num)
+    switch(number_roots)
     {
     case NO_ROOT:
         printf("No roots \n\n");
         break;
     case ONE_ROOT:
-        printf("One root: %lg \n\n", x1);
+        printf("One root: %lg \n\n", root1);
         break;
     case TWO_ROOT:
-        printf("Two roots: %lg and %lg \n\n", x1, x2);
+        printf("Two roots: %lg and %lg \n\n", root1, root2);
         break;
     case INF_ROOT:
         printf("Infinity roots \n\n");
