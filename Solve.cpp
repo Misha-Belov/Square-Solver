@@ -5,7 +5,7 @@ const double EPS = 1e-9;
 
 bool CompareDouble (double a, double b)
     {
-    assert(isfinite(a));
+    Assert(!isfinite(a));
     assert(isfinite(b));
     assert(!isnan(a));
     assert(!isnan(b));
