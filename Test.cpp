@@ -25,7 +25,7 @@ int FileReader(test* ref)
 
 void TestAll()
 {
-    int nOk = 0, i = 0;
+    int nOk = 0;
 
     /*test ref[TEST_NUM] = {{{1, 4, 4},-2, 0, 1, "ONE_ROOT"},
                         {{1, 0, -4}, 2, -2, 2, "TWO_ROOTS"},
@@ -36,9 +36,9 @@ void TestAll()
         nOk += TestOne(&ref[i]);
     */
 
-    test ref[TEST_NUM] = {};
+    test ref = {};
 
-    nOk = FileReader(&ref[i]);
+    nOk = FileReader(&ref);
 
 
 
