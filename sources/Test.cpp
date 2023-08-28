@@ -11,14 +11,14 @@ int FileReader(test* expect)
 
     FILE *F;
 
-    if( (F = fopen("test.txt", "r")) != NULL )
+    if( (F = fopen(".\test.txt", "r")) != NULL )
     {
         while (fscanf(F, "%lg %lg %lg %lg %lg %d %s", &expect->expect_coef.a, &expect->expect_coef.b, &expect->expect_coef.c, &expect->root1, &expect->root2, &expect->number_roots, expect->test_name) != EOF)
         {
             printf(GRN "%lg %lg %lg %lg %lg %d %s\n" reset, expect->expect_coef.a, expect->expect_coef.b, expect->expect_coef.c, expect->root1, expect->root2, expect->number_roots, expect->test_name);
             number_Ok += TestOne(expect);
         }
-        fclose(F);
+        fclose(F)
     }
     else
         printf("file didn't open");
