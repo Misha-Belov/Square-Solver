@@ -13,9 +13,9 @@ int main(int argc, char* argv[])
     //int argc;
     //char *argv[15];
 
-    struct coeffs coef = {.a = 0, .b = 0, .c = 0};
+    struct COEFFS coef = {.a = 0, .b = 0, .c = 0};
 
-    ReadCommandLine(argc, argv, &coef);
+    read_command_line(argc, argv, &coef);
 
     printf("Write 1 if you want to start testing or 2 if you want to input numbers:\n");
 
@@ -25,17 +25,17 @@ int main(int argc, char* argv[])
     switch(option_of_decision)
     {
         case 1:
-            TestAll();
+            test_all();
             break;
         case 2: {
 
-            InputCoeff(&coef);
+            input_coeff(&coef);
 
-            struct roots root = {.root1 = 0, .root2 = 0};
+            struct ROOTS root = {.root1 = 0, .root2 = 0};
             int number_roots = 0;
 
-            number_roots = SolveSquare(&coef, &root);
-            PrintRoot( &root, number_roots );
+            number_roots = solve_square(&coef, &root);
+            print_root( &root, number_roots );
             break;
         }
         default:

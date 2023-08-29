@@ -1,18 +1,18 @@
 #include "Solve.h"
 
-void FlushBuffer()
+void flush_buffer()
 {
     while( getchar() != '\n')
     {
     }
 }
 
-void ScanCoeff(double* coef)
+void scan_coeff(double* coef)
 {
     while(!scanf("%lg", coef))
     {
         printf("WRONG INPUT, TRY AGAIN:\n");
-        FlushBuffer();
+        flush_buffer();
     }
 }
 
@@ -21,37 +21,37 @@ void scan_decision(int* option_of_decision)
     while(!scanf("%d", option_of_decision))
     {
         printf("WRONG INPUT, TRY AGAIN:\n");
-        FlushBuffer();
+        flush_buffer();
     }
 
     if(*option_of_decision > 2 || *option_of_decision < 1)
     {
         printf("WRONG INPUT, TRY AGAIN:\n");
-        FlushBuffer();
+        flush_buffer();
         scan_decision(option_of_decision);
     }
 
 
 }
 
-void InputCoeff(coeffs* coef)
+void input_coeff(COEFFS* coef)
 {
     printf("Input coeff A: \n");
-    ScanCoeff(&coef->a);
-    FlushBuffer();
+    scan_coeff(&coef->a);
+    flush_buffer();
 
     printf("Input coeff B: \n");
-    ScanCoeff(&coef->b);
-    FlushBuffer();
+    scan_coeff(&coef->b);
+    flush_buffer();
 
     printf("Input coeff C: \n");
-    ScanCoeff(&coef->c);
-    FlushBuffer();
+    scan_coeff(&coef->c);
+    flush_buffer();
 }
 
 
 
-void PrintRoot(const roots* root, int number_roots)
+void print_root(const ROOTS* root, int number_roots)
 {
     ASSERT(isfinite(root->root1));
     ASSERT(isfinite(root->root2));

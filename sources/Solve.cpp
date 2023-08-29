@@ -1,9 +1,8 @@
 #include "Solve.h"
-            // ctype.h isfinite isnan
 
 const double EPS = 1e-9;
 
-bool CompareDouble (double a, double b)
+bool is_equal(const double a, const double b)
     {
     ASSERT(isfinite(a));
     ASSERT(isfinite(b));
@@ -17,13 +16,13 @@ bool CompareDouble (double a, double b)
         return false;
     }
 
-enum_roots SolveSquare(coeffs* coef, roots* root)
+ENUM_ROOTS solve_square(COEFFS* coef, ROOTS* root)
 {
     ASSERT(!isnan(coef->a));
 
-    if (CompareDouble (coef->a, 0))
+    if (is_equal(coef->a, 0))
         {
-        return SolveLinear (coef, root);
+        return solve_linear (coef, root);
         }
 
     double D = coef->b * coef->b - 4 * coef->a * coef->c;
@@ -32,7 +31,7 @@ enum_roots SolveSquare(coeffs* coef, roots* root)
 
     if (D < 0)
         return NO_ROOT; // NO_ROOTS
-    else if (CompareDouble (D, 0))
+    else if (is_equal(D, 0))
         {
         root->root1 = - coef->b / (2 * coef->a);
         return ONE_ROOT;
@@ -46,10 +45,10 @@ enum_roots SolveSquare(coeffs* coef, roots* root)
 
     }
 
-enum_roots SolveLinear (coeffs* coef, roots* root)
+ENUM_ROOTS solve_linear (COEFFS* coef, ROOTS* root)
     {
-    if (CompareDouble (coef->b, 0))
-        if (CompareDouble (coef->c, 0))
+    if (is_equal(coef->b, 0))
+        if (is_equal(coef->c, 0))
             return INF_ROOT;
         else
             return NO_ROOT;
@@ -62,7 +61,7 @@ enum_roots SolveLinear (coeffs* coef, roots* root)
 
 
 
-void ReadCommandLine(int number_chars, char* command[], coeffs* coef)
+void read_command_line(int number_chars, char* command[], COEFFS* coef)
 {
     const char file[] = "--file";
 
@@ -71,16 +70,16 @@ void ReadCommandLine(int number_chars, char* command[], coeffs* coef)
         //printf("%s\n", command[i]);
         if(!strcmp(command[i], file))
         {
-            ReadFromFile(command[i + 1], coef);
+            read_from_file(command[i + 1], coef);
         }
     }
 
 }
 
-void ReadFromFile(char* filename, coeffs* coef)
+void read_from_file(char* filename, COEFFS* coef)
 {
     int number_roots;
-    struct roots root = {.root1 = 0, .root2 = 0};
+    struct ROOTS root = {.root1 = 0, .root2 = 0};
 
 
     FILE *F = fopen(filename, "r");
@@ -93,8 +92,8 @@ void ReadFromFile(char* filename, coeffs* coef)
     while (fscanf(F, "%lg %lg %lg ", &coef->a, &coef->b, &coef->c) != EOF)
     {
         printf("%lg %lg %lg\n", coef->a, coef->b, coef->c);
-        number_roots = SolveSquare(coef, &root);
-        PrintRoot(&root, number_roots);
+        number_roots = solve_square(coef, &root);
+        print_root(&root, number_roots);
     }
 
     fclose(F);
