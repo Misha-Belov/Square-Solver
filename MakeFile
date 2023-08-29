@@ -5,8 +5,8 @@ FLAGS=-Wshadow -Winit-self -Wredundant-decls -Wcast-align -Wundef -Wfloat-equal 
 
 all: SolverSquare
 
-SolverSquare: $(OBJECTS_DIR)SolverSquare.o $(OBJECTS_DIR)Solve.o $(OBJECTS_DIR)Test.o
-	g++ $(OBJECTS_DIR)SolverSquare.o $(OBJECTS_DIR)Solve.o $(OBJECTS_DIR)Test.o -o SolverSquare
+SolverSquare: $(OBJECTS_DIR)SolverSquare.o $(OBJECTS_DIR)Solve.o $(OBJECTS_DIR)Test.o $(OBJECTS_DIR)Scan.o
+	g++ $(OBJECTS_DIR)SolverSquare.o $(OBJECTS_DIR)Solve.o $(OBJECTS_DIR)Test.o $(OBJECTS_DIR)Scan.o -o SolverSquare
 
 $(OBJECTS_DIR)SolverSquare.o: $(SOURCES_DIR)SolverSquare.cpp $(SOURCES_DIR)Solve.h
 	g++ $(FLAGS) -c $(SOURCES_DIR)SolverSquare.cpp -o $(OBJECTS_DIR)SolverSquare.o
@@ -16,3 +16,6 @@ $(OBJECTS_DIR)Solve.o: $(SOURCES_DIR)Solve.cpp $(SOURCES_DIR)Solve.h
 
 $(OBJECTS_DIR)Test.o: $(SOURCES_DIR)Test.cpp $(SOURCES_DIR)Test.h
 	g++ $(FLAGS) -c $(SOURCES_DIR)Test.cpp -o $(OBJECTS_DIR)Test.o
+
+$(OBJECTS_DIR)Scan.o: $(SOURCES_DIR)Scan.cpp $(SOURCES_DIR)Solve.h
+	g++ $(FLAGS) -c $(SOURCES_DIR)Scan.cpp -o $(OBJECTS_DIR)Scan.o

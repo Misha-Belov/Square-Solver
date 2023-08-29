@@ -12,17 +12,28 @@
     \file File with prototypes of function that solves quantities
 
     \brief This file include enum for roots and structure of coefficients
-
 */
 
 //! An \enum .
 /**
  * \brief enum shows quantity of roots for exact problem
  */
-enum roots {NO_ROOT = 0,    /**< enum for no roots */
-            ONE_ROOT = 1,   /**< enum for one root */
-            TWO_ROOT = 2,   /**< enum for two roots */
-            INF_ROOT = 8};  /**< enum for infinity roots */
+enum enum_roots {
+    NO_ROOT  = 0,  /**< enum for no roots */
+    ONE_ROOT = 1, /**< enum for one root */
+    TWO_ROOT = 2, /**< enum for two roots */
+    INF_ROOT = 8, /**< enum for infinity roots */
+};
+
+// DedCodeStyle
+//
+
+// camelCaseCodeStyle
+// structures - StructName
+// variables - variableName
+
+// snake_case_code_style
+// structures, names ---> everything liek that
 
 
 /*!
@@ -30,7 +41,16 @@ enum roots {NO_ROOT = 0,    /**< enum for no roots */
 
     This class also used in test class
 */
-struct coeffs {double a, b, c;};
+struct coeffs {
+    double a;
+    double b;
+    double c;
+};
+
+struct roots {
+    double root1;
+    double root2;
+};
 
 /*!  \fn void FlashBufer()
     \brief function for cleaning
@@ -39,11 +59,13 @@ struct coeffs {double a, b, c;};
 
 */
 
-void ReedCommandString(int number_chars, char* command[], coeffs* coef);
-void ReedFromFile(char* filename, coeffs* coef);
-void FlashBufer();                                          //!< a function that delete symbols from buffer.
+
+void ReadCommandLine(int number_chars, char* command[], coeffs* coef);
+void ReadFromFile(char* filename, coeffs* coef);
+void FlushBuffer();
+void scan_decision(int* option_of_decision);                                //!< a function that delete symbols from buffer.
 void ScanCoeff( double* coef);                             //!< a function that put coefficients from keyboard to structure and control them.
-void InputCoeff( coeffs* coef);                                //!< a function that asks user for coefficients.
+void InputCoeff( coeffs* coef);                               //!< a function that asks user for coefficients.
 
 /*! \fn void PrintRoot( double x1, double x2, int num )
     \brief a function that print roots of user's equation.
@@ -53,11 +75,15 @@ void InputCoeff( coeffs* coef);                                //!< a function t
     \param x2 second root \warning by default is zero
     \param num number of roots
 */
-void PrintRoot( double root1, double root2, int number_roots );
+void PrintRoot(const roots* root, int number_roots);
 
 
-roots SolveSquare( coeffs* coef, double *root1, double *root2 );    //!< a function that solves equation in common situations.
-roots SolveLinear(coeffs* coef, double *root1);                   //!< a function that solves equation when main coefficient is zero.
+enum_roots SolveSquare(coeffs* coef, roots* root);    //!< a function that solves equation in common situations.
+enum_roots SolveLinear(coeffs* coef, roots* root);                   //!< a function that solves equation when main coefficient is zero.
 bool CompareDouble(double a, double b);                     //!< a function that compares two numbers.
+
+// IsEqual(double x, double y);
+
+// IsZero(double number);
 
  #endif

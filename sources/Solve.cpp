@@ -5,47 +5,48 @@ const double EPS = 1e-9;
 
 bool CompareDouble (double a, double b)
     {
-    Assert(isfinite(a));
-    assert(isfinite(b));
-    assert(!isnan(a));
-    assert(!isnan(b));
+    ASSERT(isfinite(a));
+    ASSERT(isfinite(b));
+    ASSERT(!isnan(a));
+    ASSERT(!isnan(b));
 
 
     if (fabs (a - b) < EPS)
-        return 1;
+        return true;
     else
-        return 0;
+        return false;
     }
 
-roots SolveSquare(coeffs* coef, double* root1, double* root2)
-    {
-
+enum_roots SolveSquare(coeffs* coef, roots* root)
+{
+    ASSERT(!isnan(coef->a));
 
     if (CompareDouble (coef->a, 0))
         {
-        return SolveLinear (coef, root1);
-
+        return SolveLinear (coef, root);
         }
 
     double D = coef->b * coef->b - 4 * coef->a * coef->c;
 
+    ASSERT(!isnan(D));
+
     if (D < 0)
-        return NO_ROOT;
+        return NO_ROOT; // NO_ROOTS
     else if (CompareDouble (D, 0))
         {
-        *root1 = - coef->b / (2 * coef->a);
+        root->root1 = - coef->b / (2 * coef->a);
         return ONE_ROOT;
         }
     else
         {
-        *root1 = (-coef->b + sqrt (D)) / (2 * coef->a);
-        *root2 = (-coef->b - sqrt (D)) / (2 * coef->a);
+        root->root1 = (-coef->b + sqrt (D)) / (2 * coef->a);
+        root->root2 = (-coef->b - sqrt (D)) / (2 * coef->a);
         return TWO_ROOT;
         }
 
     }
 
-roots SolveLinear (coeffs* coef, double* root1)
+enum_roots SolveLinear (coeffs* coef, roots* root)
     {
     if (CompareDouble (coef->b, 0))
         if (CompareDouble (coef->c, 0))
@@ -54,46 +55,47 @@ roots SolveLinear (coeffs* coef, double* root1)
             return NO_ROOT;
     else
         {
-        *root1 = - coef->c / coef->b;
+        root->root1 = - coef->c / coef->b;
         return ONE_ROOT;
         }
     }
 
 
 
-void ReedCommandString(int number_chars, char* command[], coeffs* coef)
+void ReadCommandLine(int number_chars, char* command[], coeffs* coef)
 {
-    char file[10] = "--file";
+    const char file[] = "--file";
 
     for(int i = 0; i < number_chars; i++)
     {
         //printf("%s\n", command[i]);
         if(!strcmp(command[i], file))
         {
-            ReedFromFile(command[i + 1], coef);
+            ReadFromFile(command[i + 1], coef);
         }
     }
 
 }
 
-void ReedFromFile(char* filename, coeffs* coef)
+void ReadFromFile(char* filename, coeffs* coef)
 {
     int number_roots;
-    double root1 = 0, root2 = 0;
+    struct roots root = {.root1 = 0, .root2 = 0};
 
-    FILE *F;
 
-    if( (F = fopen(filename, "r")) != NULL )
+    FILE *F = fopen(filename, "r");
+    if( F == NULL )
     {
-        while (fscanf(F, "%lg %lg %lg ", &coef->a, &coef->b, &coef->c) != EOF)
-        {
-            printf("%lg %lg %lg\n", coef->a, coef->b, coef->c);
-            number_roots = SolveSquare(coef, &root1, &root2);
-            PrintRoot( root1, root2, number_roots);
-        }
-        fclose(F);
-    }
-    else
         printf("file didn't open\n");
+        return;
+    }
 
+    while (fscanf(F, "%lg %lg %lg ", &coef->a, &coef->b, &coef->c) != EOF)
+    {
+        printf("%lg %lg %lg\n", coef->a, coef->b, coef->c);
+        number_roots = SolveSquare(coef, &root);
+        PrintRoot(&root, number_roots);
+    }
+
+    fclose(F);
 }
