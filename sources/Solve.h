@@ -48,13 +48,16 @@ struct COEFFS
     double c;
 };
 
+/*!
+    \brief A structure for roots of the equation
+*/
 struct ROOTS
 {
     double root1;
     double root2;
 };
 
-/*!  \fn void FlashBufer()
+/*!  \fn void flush_buffer()
     \brief function for cleaning
 
     Function that delete symbols from buffer.
@@ -64,13 +67,13 @@ struct ROOTS
 void scan_decision(int* option_of_decision);
 void process_options(COEFFS* coef, int option_of_decision);
 
-void read_command_line(const int number_chars, const char* command[], COEFFS* coef);
-void read_from_file(const char* filename, COEFFS* coef);
+void read_command_line(const int number_chars, const char* command[], COEFFS* coef);    ///< this function reed name of the fail with coefficients from command string
+void read_from_file(const char* filename, COEFFS* coef);                                ///< this function reed coefficients from file defined in command line
 void flush_buffer();                                //!< a function that delete symbols from buffer.
 void scan_coeff(double* coef);                      //!< a function that put coefficients from keyboard to structure and control them.
 void input_coeff(COEFFS* coef);                     //!< a function that asks user for coefficients.
 
-/*! \fn void PrintRoot( double x1, double x2, int num )
+/*! \fn void print_root( double x1, double x2, int num )
     \brief a function that print roots of user's equation.
 
     \warning  if equality have only one root, put this root on the first place, but second root is staying zero.
@@ -78,11 +81,11 @@ void input_coeff(COEFFS* coef);                     //!< a function that asks us
     \param x2 second root \warning by default is zero
     \param num number of roots
 */
-void print_root(const ROOTS* root, int number_roots);
+void print_root(const ROOTS* root, int number_roots);       //!< this function print roots to the screen
 
 
 ENUM_ROOTS solve_square(COEFFS* coef, ROOTS* root);         //!< a function that solves equation in common situations.
 ENUM_ROOTS solve_linear(COEFFS* coef, ROOTS* root);         //!< a function that solves equation when main coefficient is zero.
-bool is_equal(const double a, const double b);              //!< a function that compares two numbers.
+bool is_equal(const double a, const double b);              //!< a function that compares two numbers and return 1 if they are equal or very close to equal and 0 if not.
 
  #endif
