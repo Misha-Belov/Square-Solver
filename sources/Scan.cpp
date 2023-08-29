@@ -30,8 +30,6 @@ void scan_decision(int* option_of_decision)
         flush_buffer();
         scan_decision(option_of_decision);
     }
-
-
 }
 
 void input_coeff(COEFFS* coef)
@@ -53,27 +51,57 @@ void input_coeff(COEFFS* coef)
 
 void print_root(const ROOTS* root, int number_roots)
 {
-    ASSERT(isfinite(root->root1));
-    ASSERT(isfinite(root->root2));
-    ASSERT(!isnan(root->root1));
-    ASSERT(!isnan(root->root2));
-
-
     switch(number_roots)
     {
-    case NO_ROOT:
-        printf("No roots \n\n");
-        break;
-    case ONE_ROOT:
-        printf("One root: %lg \n\n", root->root1);
-        break;
-    case TWO_ROOT:
-        printf("Two roots: %lg and %lg \n\n", root->root1, root->root2);
-        break;
-    case INF_ROOT:
-        printf("Infinity roots \n\n");
-        break;
-    default:
-        break;
+        case NO_ROOT:
+            printf("No roots \n\n");
+            break;
+        case ONE_ROOT:
+            printf("One root: %lg \n\n", root->root1);
+            break;
+        case TWO_ROOT:
+            printf("Two roots: %lg and %lg \n\n", root->root1, root->root2);
+            break;
+        case INF_ROOT:
+            printf("Infinity roots \n\n");
+            break;
+        default:
+            break;
     }
+}
+
+void read_command_line(const int number_chars, const char* command[], COEFFS* coef)
+{
+    const char file[] = "--file";
+
+    for(int i = 0; i < number_chars; i++)
+    {
+        if(!strcmp(command[i], file))
+        {
+            read_from_file(command[i + 1], coef);
+        }
+    }
+}
+
+void read_from_file(const char* filename, COEFFS* coef)
+{
+    int number_roots;
+    struct ROOTS root = {.root1 = NAN, .root2 = NAN};
+
+    FILE *F = fopen(filename, "r");
+
+    if( F == NULL )
+    {
+        printf("file didn't open\n");
+        return;
+    }
+
+    while (fscanf(F, "%lg %lg %lg ", &coef->a, &coef->b, &coef->c) != EOF)
+    {
+        printf("%lg %lg %lg\n", coef->a, coef->b, coef->c);
+        number_roots = solve_square(coef, &root);
+        print_root(&root, number_roots);
+    }
+
+    fclose(F);
 }

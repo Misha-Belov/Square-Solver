@@ -22,7 +22,7 @@ enum ENUM_ROOTS {
     NO_ROOT  = 0,  /**< enum for no roots */
     ONE_ROOT = 1, /**< enum for one root */
     TWO_ROOT = 2, /**< enum for two roots */
-    INF_ROOT = 8, /**< enum for infinity roots */
+    INF_ROOT = -1, /**< enum for infinity roots */
 };
 
 // DedCodeStyle
@@ -41,13 +41,15 @@ enum ENUM_ROOTS {
 
     This class also used in test class
 */
-struct COEFFS {
+struct COEFFS
+{
     double a;
     double b;
     double c;
 };
 
-struct ROOTS {
+struct ROOTS
+{
     double root1;
     double root2;
 };
@@ -59,13 +61,14 @@ struct ROOTS {
 
 */
 
+void scan_decision(int* option_of_decision);
+void process_options(COEFFS* coef, int option_of_decision);
 
-void read_command_line(int number_chars, char* command[], COEFFS* coef);
-void read_from_file(char* filename, COEFFS* coef);
-void flush_buffer();
-void scan_decision(int* option_of_decision);                                //!< a function that delete symbols from buffer.
-void scan_coeff( double* coef);                             //!< a function that put coefficients from keyboard to structure and control them.
-void input_coeff( COEFFS* coef);                               //!< a function that asks user for coefficients.
+void read_command_line(const int number_chars, const char* command[], COEFFS* coef);
+void read_from_file(const char* filename, COEFFS* coef);
+void flush_buffer();                                //!< a function that delete symbols from buffer.
+void scan_coeff(double* coef);                      //!< a function that put coefficients from keyboard to structure and control them.
+void input_coeff(COEFFS* coef);                     //!< a function that asks user for coefficients.
 
 /*! \fn void PrintRoot( double x1, double x2, int num )
     \brief a function that print roots of user's equation.
@@ -78,8 +81,8 @@ void input_coeff( COEFFS* coef);                               //!< a function t
 void print_root(const ROOTS* root, int number_roots);
 
 
-ENUM_ROOTS solve_square(COEFFS* coef, ROOTS* root);    //!< a function that solves equation in common situations.
-ENUM_ROOTS solve_linear(COEFFS* coef, ROOTS* root);                   //!< a function that solves equation when main coefficient is zero.
-bool is_equal(const double a, const double b);                     //!< a function that compares two numbers.
+ENUM_ROOTS solve_square(COEFFS* coef, ROOTS* root);         //!< a function that solves equation in common situations.
+ENUM_ROOTS solve_linear(COEFFS* coef, ROOTS* root);         //!< a function that solves equation when main coefficient is zero.
+bool is_equal(const double a, const double b);              //!< a function that compares two numbers.
 
  #endif

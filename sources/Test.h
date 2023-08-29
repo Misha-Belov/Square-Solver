@@ -13,12 +13,12 @@ struct TEST
 {
     struct COEFFS expect_coef;
     struct ROOTS expect_root;     ///< expected roots
-    int number_roots;
+    int number_roots;             ///< expected number of roots
     char test_name[NAME_SIZE];
 };
 
 int file_reader(TEST* expect, int* number_tests);      //!< \brief a function that put information from file to structure.
-void test_all();                 //!< \brief a function that started tests.
+void test_all();                    //!< \brief a function that started tests.
 bool test_one(const TEST* expect);  //!< \brief a function that doing separate test \param [in] ref structure which include all information.
 
 #endif

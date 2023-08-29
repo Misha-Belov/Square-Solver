@@ -15,3 +15,5 @@ SolveSquare.c.g++log.txt
 *.bat
 latex/Makefile
 meow
+sources/string.cpp
+sources/string.cpp
