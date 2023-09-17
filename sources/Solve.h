@@ -18,22 +18,13 @@
 /**
  * \brief enum shows quantity of roots for exact problem
  */
-enum ENUM_ROOTS {
+enum ENUM_ROOTS
+{
     NO_ROOT  = 0,  /**< enum for no roots */
     ONE_ROOT = 1, /**< enum for one root */
     TWO_ROOT = 2, /**< enum for two roots */
     INF_ROOT = -1, /**< enum for infinity roots */
 };
-
-// DedCodeStyle
-//
-
-// camelCaseCodeStyle
-// structures - StructName
-// variables - variableName
-
-// snake_case_code_style
-// structures, names ---> everything liek that
 
 
 /*!

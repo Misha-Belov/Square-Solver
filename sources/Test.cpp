@@ -45,7 +45,9 @@ bool test_one(const TEST* expect)
     struct COEFFS coef = {expect->expect_coef.a, expect->expect_coef.b, expect->expect_coef.c} ;
     int number_roots = solve_square(&coef, &test_root);
 
-    if(!is_equal(test_root.root1, root.root1)|| !is_equal(test_root.root2, root.root2) || !is_equal(number_roots, expect->number_roots))
+    if(!is_equal(test_root.root1, root.root1) ||
+       !is_equal(test_root.root2, root.root2) ||
+       !is_equal(number_roots, expect->number_roots))
     {
         printf( BRED "ERROR in %s x1 = %lg, x2 = %lg, numroots = %d \nINSTEAD OF: x1 = %lg, x2 = %lg, numroots = %d \n" CRESET, expect->test_name, test_root.root1, test_root.root2, number_roots, root.root1, root.root2, expect->number_roots);
         return false;
