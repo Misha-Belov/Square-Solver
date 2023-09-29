@@ -5,7 +5,7 @@
 #include "ANSI-color-codes.h"
 
 
-int file_reader(TEST* expect, int* number_tests)
+int file_reader(Test* expect, int* number_tests)
 {
     FILE *F = fopen("txt/test.txt", "r");
 
@@ -29,21 +29,33 @@ int file_reader(TEST* expect, int* number_tests)
     return number_Ok;
 }
 
+void sort_roots(double root1, double root2)
+{
+    if(root1 > root2)
+    {
+        double tmp = root1;
+        root1 = root2;
+        root2 = tmp;
+    }
+}
+
 void test_all()
 {
     int number_tests = 0;
-    TEST expect;
+    Test expect;
     int number_Ok = file_reader(&expect, &number_tests);
 
     printf ("TestOk: %d out of %d\n", number_Ok, number_tests);
 }
 
-bool test_one(const TEST* expect)
+bool test_one(const Test* expect)
 {
-    struct ROOTS test_root = {.root1 = NAN, .root2 = NAN};
-    struct ROOTS root = {expect->expect_root.root1, expect->expect_root.root2};
-    struct COEFFS coef = {expect->expect_coef.a, expect->expect_coef.b, expect->expect_coef.c} ;
+    struct Roots test_root = {.root1 = NAN, .root2 = NAN};
+    struct Roots root = {expect->expect_root.root1, expect->expect_root.root2};
+    struct Coeffs coef = {expect->expect_coef.a, expect->expect_coef.b, expect->expect_coef.c} ;
     int number_roots = solve_square(&coef, &test_root);
+
+    sort_roots(root.root1, root.root2);
 
     if(!is_equal(test_root.root1, root.root1) ||
        !is_equal(test_root.root2, root.root2) ||
@@ -52,8 +64,6 @@ bool test_one(const TEST* expect)
         printf( BRED "ERROR in %s x1 = %lg, x2 = %lg, numroots = %d \nINSTEAD OF: x1 = %lg, x2 = %lg, numroots = %d \n" CRESET, expect->test_name, test_root.root1, test_root.root2, number_roots, root.root1, root.root2, expect->number_roots);
         return false;
     }
-    else
-    {
-        return true;
-    }
+
+    return true;
 }

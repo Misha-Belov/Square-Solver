@@ -7,7 +7,7 @@
 int main(int argc, const char* argv[])
 {
     int option_of_decision = 0;
-    struct COEFFS coef = {.a = 0, .b = 0, .c = 0};
+    struct Coeffs coef = {.a = 0, .b = 0, .c = 0};
 
     read_command_line(argc, argv, &coef);
 
@@ -17,7 +17,7 @@ int main(int argc, const char* argv[])
     process_options(&coef, option_of_decision);
 }
 
-void process_options(COEFFS* coef, int option_of_decision)
+void process_options(Coeffs* coef, int option_of_decision)
 {
     switch(option_of_decision)
     {
@@ -26,9 +26,15 @@ void process_options(COEFFS* coef, int option_of_decision)
             break;
         case 2:
         {
-            input_coeff(coef);
+            int w = input_coeff(coef);
 
-            struct ROOTS root = {.root1 = 0, .root2 = 0};
+            if(w == 0)
+            {
+                printf("WRONG INPUT");
+                return;
+            }
+
+            struct Roots root = {.root1 = 0, .root2 = 0};
             int number_roots = 0;
 
             number_roots = solve_square(coef, &root);

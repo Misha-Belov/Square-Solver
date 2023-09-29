@@ -2,18 +2,27 @@
 
 void flush_buffer()
 {
-    while( getchar() != '\n')
+    while(getchar() != '\n')
     {
     }
 }
 
-void scan_coeff(double* coef)
+bool scan_coeff(double* coef)
 {
-    while(!scanf("%lg", coef))
+    int warning = scanf("%lg", coef);
+
+    if(warning == EOF)
+    {
+        return false;
+    }
+
+    while(!warning)
     {
         printf("WRONG INPUT, TRY AGAIN:\n");
         flush_buffer();
     }
+
+    return true;
 }
 
 void scan_decision(int* option_of_decision)
@@ -32,24 +41,29 @@ void scan_decision(int* option_of_decision)
     }
 }
 
-void input_coeff(COEFFS* coef)
+bool input_coeff(Coeffs* coef)
 {
     printf("Input coeff A: \n");
-    scan_coeff(&coef->a);
+    if(!scan_coeff(&coef->a))
+        return false;
     flush_buffer();
 
     printf("Input coeff B: \n");
-    scan_coeff(&coef->b);
+    if(!scan_coeff(&coef->b))
+        return false;
     flush_buffer();
 
     printf("Input coeff C: \n");
-    scan_coeff(&coef->c);
+    if(!scan_coeff(&coef->c))
+        return false;
     flush_buffer();
+
+    return true;
 }
 
 
 
-void print_root(const ROOTS* root, int number_roots)
+void print_root(const Roots* root, int number_roots)
 {
     switch(number_roots)
     {
@@ -66,11 +80,15 @@ void print_root(const ROOTS* root, int number_roots)
             printf("Infinity roots \n\n");
             break;
         default:
+            assert(number_roots == NO_ROOT  ||
+                   number_roots == ONE_ROOT ||
+                   number_roots == TWO_ROOT ||
+                   number_roots == INF_ROOT);
             break;
     }
 }
 
-void read_command_line(const int number_chars, const char* command[], COEFFS* coef)
+void read_command_line(const int number_chars, const char* command[], Coeffs* coef)
 {
     const char file[] = "--file";
 
@@ -83,25 +101,25 @@ void read_command_line(const int number_chars, const char* command[], COEFFS* co
     }
 }
 
-void read_from_file(const char* filename, COEFFS* coef)
+void read_from_file(const char* filename, Coeffs* coef)
 {
     int number_roots;
-    struct ROOTS root = {.root1 = NAN, .root2 = NAN};
+    struct Roots root = {.root1 = NAN, .root2 = NAN};
 
-    FILE *F = fopen(filename, "r");
+    FILE *file = fopen(filename, "r");
 
-    if( F == NULL )
+    if( file == NULL )
     {
         printf("file didn't open\n");
         return;
     }
 
-    while (fscanf(F, "%lg %lg %lg ", &coef->a, &coef->b, &coef->c) != EOF)
+    while (fscanf(file, "%lg %lg %lg ", &coef->a, &coef->b, &coef->c) != EOF)
     {
         printf("%lg %lg %lg\n", coef->a, coef->b, coef->c);
         number_roots = solve_square(coef, &root);
         print_root(&root, number_roots);
     }
 
-    fclose(F);
+    fclose(file);
 }
