@@ -19,3 +19,4 @@ meow
 sources/string.cpp
 sources/string.cpp
 *.o
+*.o

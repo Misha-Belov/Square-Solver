@@ -18,8 +18,11 @@ struct Test
 };
 
 void sort_roots(double root1, double root2);
-int file_reader(Test* expect, int* number_tests);      //!< \brief a function that put information from file to structure.
-void test_all();                    //!< \brief a function that started tests.
-bool test_one(const Test* expect);  //!< \brief a function that doing separate test \param [in] ref structure which include all information.
+/*!< \brief a function that put information from file to structure.*/
+int file_reader(Test* expect, int* number_tests);
+/*!< \brief a function that started tests.*/
+void test_all();
+/*!< \brief a function that doing separate test \param [in] ref structure which include all information. */
+bool test_one(const Test* expect);
 
 #endif

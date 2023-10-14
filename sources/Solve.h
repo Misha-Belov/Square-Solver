@@ -60,9 +60,13 @@ void process_options(Coeffs* coef, int option_of_decision);
 
 void read_command_line(const int number_chars, const char* command[], Coeffs* coef);    ///< this function reed name of the fail with coefficients from command string
 void read_from_file(const char* filename, Coeffs* coef);                                ///< this function reed coefficients from file defined in command line
-void flush_buffer();                                //!< a function that delete symbols from buffer.
-bool scan_coeff(double* coef);                      //!< a function that put coefficients from keyboard to structure and control them.
-bool input_coeff(Coeffs* coef);                     //!< a function that asks user for coefficients.
+
+/*! a function that delete symbols from buffer.*/
+void flush_buffer();
+/*! a function that put coefficients from keyboard to structure and control them. */
+bool scan_coeff(double* coef);
+/*! a function that asks user for coefficients. */
+bool input_coeff(Coeffs* coef);
 
 /*! \fn void print_root( double x1, double x2, int num )
     \brief a function that print roots of user's equation.
@@ -72,11 +76,14 @@ bool input_coeff(Coeffs* coef);                     //!< a function that asks us
     \param x2 second root \warning by default is zero
     \param num number of roots
 */
-void print_root(const Roots* root, int number_roots);       //!< this function print roots to the screen
+/*! this function print roots to the screen*/
+void print_root(const Roots* root, int number_roots);
 
-
-Nroots solve_square(Coeffs* coef, Roots* root);         //!< a function that solves equation in common situations.
-Nroots solve_linear(const Coeffs* coef, Roots* root);         //!< a function that solves equation when main coefficient is zero.
-bool is_equal(const double a, const double b);              //!< a function that compares two numbers and return 1 if they are equal or very close to equal and 0 if not.
+/*! a function that solves equation in common situations.*/
+Nroots solve_square(Coeffs* coef, Roots* root);
+/*! a function that solves equation when main coefficient is zero.    */
+Nroots solve_linear(const Coeffs* coef, Roots* root);
+/*! a function that compares two numbers and return 1 if they are equal or very close to equal and 0 if not.   */
+bool is_equal(const double a, const double b);
 
  #endif
